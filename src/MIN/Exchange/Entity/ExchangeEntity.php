@@ -35,6 +35,8 @@ final class ExchangeEntity extends Villager
 		$this->setNameTag("§l§r§eSHOP\n§r$this->exchangeName");
 		$this->config = new Config(Exchange::getInstance()->getDataFolder().$this->exchangeName.'.yml', Config::YAML);
 		$this->data = $this->config->getAll();
+    $this->setNameTagVisible();
+    $this->setNameTagAlwaysVisible();
 	}
 
 	public function attack(EntityDamageEvent $source): void
@@ -86,7 +88,7 @@ final class ExchangeEntity extends Villager
 	public function addItem(Item $cost1, Item $cost2, Item $result, string $texture): void
 	{
 		$this->data[] = [
-			'cost1' => $cost1->isNull() || ($cost1->getTypeId() === VanillaItems::AIR()->getTypeId()) ? null :Exchange::ItemDataSerialize($cost1),
+			'cost1' => $cost1->isNull() || ($cost1->getTypeId() === VanillaItems::AIR()) ? null :Exchange::ItemDataSerialize($cost1),
 			'cost2' => $cost2->isNull() ? null:Exchange::ItemDataSerialize($cost2),
 			'result' => Exchange::ItemDataSerialize($result),
 			'texture' => $texture

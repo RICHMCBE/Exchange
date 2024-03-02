@@ -30,7 +30,7 @@ final readonly class ExchangeTextureInputForm implements Form
 				[
 					'type' => 'input',
 					'text' => Design::FORM_TEXT.'보상 아이템의 텍스쳐를 입력해주세요',
-					'default' => 'textures/ui/Form/'
+					'default' => 'textures/ui/form/'
 				]
 			]
 		];
