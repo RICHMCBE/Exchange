@@ -172,13 +172,13 @@ final class ExchangeEditForm implements Form {
                             $cost2 = $inv->getItem(12);
                             $result = $inv->getItem(15);
                             $transaction->getPlayer()->removeCurrentWindow();
-                            $entity->editItem($slot1 / 2, $cost1, $cost2, $result);
+                            $entity->editItem($slot1, $cost1, $cost2, $result);
                             $player->sendMessage(Design::$prefix_2 . '§a상품을 수정하였습니다');
                             return $transaction->discard();
                         }
                         if ($slot === 26) {
                             $transaction->getPlayer()->removeCurrentWindow();
-                            $entity->removeItem($slot1 / 2);
+                            $entity->removeItem($slot1);
                             $player->sendMessage(Design::$prefix_2 . '§a상품을 삭제하였습니다');
                             return $transaction->discard();
                         }
