@@ -29,7 +29,7 @@ final readonly class ExchangeTextureInputForm implements Form
 			'content' => [
 				[
 					'type' => 'input',
-					'text' => Design::FORM_TEXT.'보상 아이템의 텍스쳐를 입력해주세요',
+					'text' => '보상 아이템의 텍스쳐를 입력해주세요',
 					'default' => 'textures/items/'
 				]
 			]
@@ -39,15 +39,15 @@ final readonly class ExchangeTextureInputForm implements Form
 	public function handleResponse(Player $player, $data): void
 	{
 		if($data === null) {
-			$player->sendMessage(Design::$prefix_2.'추가가 취소되었습니다');
+			$player->sendMessage('§l§6 • §r§7추가가 취소되었습니다');
 			return;
 		}
 		$texture = trim($data[0]);
 		if($texture === '') {
-			$player->sendMessage(Design::$prefix_2.'텍스쳐를 입력해주세요');
+			$player->sendMessage('§l§6 • §r§7텍스쳐를 입력해주세요');
 			return;
 		}
 		$this->entity->addItem($this->cost1,$this->cost2, $this->result, $texture);
-		$player->sendMessage(Design::$prefix_2.'추가가 완료되었습니다');
+		$player->sendMessage('§l§6 • §r§7추가가 완료되었습니다');
 	}
 }

@@ -52,7 +52,7 @@ final readonly class ExchangeListForm implements Form
 		return [
 			'type' => 'form',
 			'title' => 'customUI_ExchangeShopForm_교환소',
-			'content' => Design::FORM_TEXT.'거래하실 상품을 선택해주세요',
+			'content' => '거래하실 상품을 선택해주세요',
 			'buttons' => $buttons
 		];
 	}
@@ -67,18 +67,18 @@ final readonly class ExchangeListForm implements Form
 		$result = Exchange::ItemDataDeserialize($itemData['result']);
 		$bool1 = ($itemData['cost1'] === null) || ($player->getInventory()->contains(Exchange::ItemDataDeserialize($itemData['cost1'])));
 		if(!$bool1) {
-			$player->sendMessage(Design::$prefix_2.'아이템이 없어서 거래가 성립되지 않았습니다');
+			$player->sendMessage('§l§6 • §r§7아이템이 없어서 거래가 성립되지 않았습니다');
 			return;
 		}
 		$player->getInventory()->removeItem($cost1);
 		$bool2 = ($itemData['cost2'] === null) || ($player->getInventory()->contains(Exchange::ItemDataDeserialize($itemData['cost2'])));
 		if(!$bool2) {
-			$player->sendMessage(Design::$prefix_2.'아이템이 없어서 거래가 성립되지 않았습니다');
+			$player->sendMessage('§l§6 • §r§7아이템이 없어서 거래가 성립되지 않았습니다');
 			$player->getInventory()->addItem($cost1);
 			return;
 		}
 		$player->getInventory()->removeItem($cost2);
 		$player->getInventory()->addItem($result);
-		$player->sendMessage(Design::$prefix_2.'거래가 성립되었습니다');
+		$player->sendMessage('§l§6 • §r§7거래가 성립되었습니다');
 	}
 }

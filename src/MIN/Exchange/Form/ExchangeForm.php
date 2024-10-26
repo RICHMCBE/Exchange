@@ -22,7 +22,7 @@ final class ExchangeForm implements Form
 			'content' => [
 				[
 					'type' => 'input',
-					'text' => Design::FORM_TEXT.'만드실 상점 이름을 입력해주세요'
+					'text' => '만드실 상점 이름을 입력해주세요'
 				]
 			]
 		];
@@ -33,17 +33,17 @@ final class ExchangeForm implements Form
 		if($data === null) return;
 		$name = trim($data[0]);
 		if($name === '') {
-			$player->sendMessage(Design::$prefix_2.'상점 이름을 입력해주세요');
+			$player->sendMessage('§l§6 • §r§7상점 이름을 입력해주세요');
 			return;
 		}
 		if(Exchange::getInstance()->existsExchange($name)) {
-			$player->sendMessage(Design::$prefix_2.'이미 존재하는 상점입니다. 다른 이름을 입력해주세요');
+			$player->sendMessage('§l§6 • §r§7이미 존재하는 상점입니다. 다른 이름을 입력해주세요');
 			return;
 		}
 		$nbt = CompoundTag::create()
 			->setString('name', $name);
 		$entity = new ExchangeEntity($player->getLocation(), $nbt);
 		$entity->spawnToAll();
-		$player->sendMessage(Design::$prefix_2.'상점을 생성하였습니다');
+		$player->sendMessage('§l§6 • §r§7상점을 생성하였습니다');
 	}
 }

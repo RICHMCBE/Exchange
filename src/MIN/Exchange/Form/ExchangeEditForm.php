@@ -28,10 +28,10 @@ final class ExchangeEditForm implements Form {
         return [
             'type' => 'form',
             'title' => '§lEDIT EXCHANGE',
-            'content' => Design::FORM_TEXT . '하실 작업을 선택해주세요',
+            'content' => '하실 작업을 선택해주세요',
             'buttons' => [
-                ['text' => Design::FORM_TEXT . '상품 추가'],
-                ['text' => Design::FORM_TEXT . '상품 수정'],
+                ['text' => '상품 추가'],
+                ['text' =>'상품 수정'],
             ]
         ];
     }
@@ -67,7 +67,7 @@ final class ExchangeEditForm implements Form {
                         $player->removeCurrentWindow();
                         $player->getInventory()->addItem($cost1, $cost2, $result);
                         if ($result->isNull()) {
-                            $player->sendMessage(Design::$prefix_2 . '§c결과 아이템칸을 채워주세요');
+                            $player->sendMessage('§l§6 • §r§7§c결과 아이템칸을 채워주세요');
                             return $transaction->discard();
                         }
                         $player->sendForm(new ExchangeTextureInputForm($entity, $cost1, $cost2, $result));
@@ -173,13 +173,13 @@ final class ExchangeEditForm implements Form {
                             $result = $inv->getItem(15);
                             $transaction->getPlayer()->removeCurrentWindow();
                             $entity->editItem($slot1, $cost1, $cost2, $result);
-                            $player->sendMessage(Design::$prefix_2 . '§a상품을 수정하였습니다');
+                            $player->sendMessage('§l§6 • §r§7§a상품을 수정하였습니다');
                             return $transaction->discard();
                         }
                         if ($slot === 26) {
                             $transaction->getPlayer()->removeCurrentWindow();
                             $entity->removeItem($slot1);
-                            $player->sendMessage(Design::$prefix_2 . '§a상품을 삭제하였습니다');
+                            $player->sendMessage('§l§6 • §r§7§a상품을 삭제하였습니다');
                             return $transaction->discard();
                         }
                         return $transaction->discard();
