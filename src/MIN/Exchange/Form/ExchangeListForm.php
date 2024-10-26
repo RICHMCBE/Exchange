@@ -51,7 +51,7 @@ final readonly class ExchangeListForm implements Form
 		}
 		return [
 			'type' => 'form',
-			'title' => 'customUI_ExchangeShopForm_교환소',
+			'title' => 'customUI_ExchangeMarketForm_교환소',
 			'content' => '거래하실 상품을 선택해주세요',
 			'buttons' => $buttons
 		];
