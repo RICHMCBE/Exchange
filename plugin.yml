@@ -1,5 +1,11 @@
 name: Exchange
 author: MIN
 api: 5.0.0
-version: 1.0.3
+version: 1.0.4
 main: MIN\Exchange\Exchange
+
+depend:
+  - ItemTexture
+
+softdepend:
+  - KorItemName
