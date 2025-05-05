@@ -15,7 +15,7 @@ use pocketmine\inventory\Inventory;
 use pocketmine\item\LegacyStringToItemParser;
 use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
-use ryun42680\richdesign\Design;
+use naeng\ItemTexture\ItemTexture;
 
 final class ExchangeEditForm implements Form {
     private ExchangeEntity $entity;
@@ -31,7 +31,7 @@ final class ExchangeEditForm implements Form {
             'content' => '하실 작업을 선택해주세요',
             'buttons' => [
                 ['text' => '상품 추가'],
-                ['text' =>'상품 수정'],
+                ['text' => '상품 수정'],
             ]
         ];
     }
@@ -40,7 +40,9 @@ final class ExchangeEditForm implements Form {
         $entity = $this->entity;
         $sign = LegacyStringToItemParser::getInstance()->parse('160:4');
         if ($data === null) return;
+
         if ($data === 0) {
+            // 상품 추가
             $inv = InvMenu::create(InvMenuTypeIds::TYPE_CHEST);
             for ($i = 0; $i < 27; $i++) {
                 $inv->getInventory()->setItem($i, $sign);
@@ -59,28 +61,38 @@ final class ExchangeEditForm implements Form {
                 $player = $transaction->getPlayer();
                 $slot = $transaction->getAction()->getSlot();
                 $inv = $transaction->getAction()->getInventory();
+
                 if ($slot !== 11 && $slot !== 12 && $slot !== 15) {
                     if ($slot === 17) {
                         $cost1 = $inv->getItem(11);
                         $cost2 = $inv->getItem(12);
                         $result = $inv->getItem(15);
-                        $player->removeCurrentWindow();
-                        $player->getInventory()->addItem($cost1, $cost2, $result);
+
                         if ($result->isNull()) {
                             $player->sendMessage('§l§6 • §r§7§c결과 아이템칸을 채워주세요');
                             return $transaction->discard();
                         }
-                        $player->sendForm(new ExchangeTextureInputForm($entity, $cost1, $cost2, $result));
+
+                        // ItemTexture 플러그인을 사용하여 텍스처 자동 설정
+                        $texture = ItemTexture::getItemTexture($result);
+                        if ($texture === null) {
+                            $texture = 'textures/items/default'; // 기본 텍스처
+                        }
+
+                        // 바로 아이템 추가
+                        $entity->addItem($cost1, $cost2, $result, $texture);
+                        $player->sendMessage('§l§6 • §r§7§a상품이 추가되었습니다');
+                        $player->removeCurrentWindow();
                         return $transaction->discard();
                     }
                     return $transaction->discard();
                 }
                 return $transaction->continue();
             });
-            $inv->setInventoryCloseListener(function (Player $player, Inventory $inventory): void {
-            });
+
             $inv->setName('ADD EXCHANGE');
         } else {
+            // 상품 수정 (기존 코드 유지)
             $inv = InvMenu::create(InvMenuTypeIds::TYPE_CHEST);
             $items = [];
             foreach ($entity->data as $item) {
