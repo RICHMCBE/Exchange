@@ -9,7 +9,6 @@ use MIN\Exchange\Exchange;
 use pocketmine\form\Form;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
-use ryun42680\richdesign\Design;
 use function trim;
 
 final class ExchangeForm implements Form
@@ -33,17 +32,17 @@ final class ExchangeForm implements Form
 		if($data === null) return;
 		$name = trim($data[0]);
 		if($name === '') {
-			$player->sendMessage('§l§6 • §r§7상점 이름을 입력해주세요');
+			$player->sendMessage('§r下 상점 이름을 입력해주세요.');
 			return;
 		}
 		if(Exchange::getInstance()->existsExchange($name)) {
-			$player->sendMessage('§l§6 • §r§7이미 존재하는 상점입니다. 다른 이름을 입력해주세요');
+			$player->sendMessage('§r下 이미 존재하는 상점입니다. 다른 이름을 입력해주세요.');
 			return;
 		}
 		$nbt = CompoundTag::create()
 			->setString('name', $name);
 		$entity = new ExchangeEntity($player->getLocation(), $nbt);
 		$entity->spawnToAll();
-		$player->sendMessage('§l§6 • §r§7상점을 생성하였습니다');
+		$player->sendMessage('§r丌 상점을 생성하였습니다.');
 	}
 }
