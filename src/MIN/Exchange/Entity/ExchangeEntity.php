@@ -13,7 +13,6 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item;
 use pocketmine\item\ItemTypeIds;
-use pocketmine\item\VanillaItems;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\permission\DefaultPermissions;
 use pocketmine\player\Player;
@@ -88,7 +87,7 @@ final class ExchangeEntity extends Villager
 	public function addItem(Item $cost1, Item $cost2, Item $result, string $texture): void
 	{
 		$this->data[] = [
-			'cost1' => $cost1->isNull() || ($cost1->getTypeId() === VanillaItems::AIR()) ? null :Exchange::ItemDataSerialize($cost1),
+			'cost1' => $cost1->isNull() ? null : Exchange::ItemDataSerialize($cost1),
 			'cost2' => $cost2->isNull() ? null:Exchange::ItemDataSerialize($cost2),
 			'result' => Exchange::ItemDataSerialize($result),
 			'texture' => $texture
