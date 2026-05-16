@@ -12,7 +12,8 @@ use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use muqsit\invmenu\type\InvMenuTypeIds;
 use pocketmine\form\Form;
 use pocketmine\inventory\Inventory;
-use pocketmine\item\LegacyStringToItemParser;
+use pocketmine\block\utils\DyeColor;
+use pocketmine\block\VanillaBlocks;
 use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
 use naeng\ItemTexture\ItemTexture;
@@ -38,7 +39,7 @@ final class ExchangeEditForm implements Form {
 
     public function handleResponse(Player $player, $data): void {
         $entity = $this->entity;
-        $sign = LegacyStringToItemParser::getInstance()->parse('160:4');
+        $sign = VanillaBlocks::STAINED_GLASS_PANE()->setColor(DyeColor::YELLOW)->asItem();
         if ($data === null) return;
 
         if ($data === 0) {
@@ -53,7 +54,7 @@ final class ExchangeEditForm implements Form {
             $inv->getInventory()->setItem(6, VanillaItems::OAK_SIGN()->setCustomName('§r§a결과 아이템'));
             $inv->getInventory()->setItem(15, VanillaItems::AIR());
             $inv->getInventory()->setItem(17,
-                LegacyStringToItemParser::getInstance()->parse('wool:5')
+                VanillaBlocks::WOOL()->setColor(DyeColor::LIME)->asItem()
                     ->setCustomName('§r§a상품 추가하기')
             );
 
@@ -69,7 +70,7 @@ final class ExchangeEditForm implements Form {
                         $result = $inv->getItem(15);
 
                         if ($result->isNull()) {
-                            $player->sendMessage('§l§6 • §r§7§c결과 아이템칸을 채워주세요');
+                            $player->sendMessage('§r下 결과 아이템칸을 채워주세요.');
                             return $transaction->discard();
                         }
 
@@ -81,7 +82,7 @@ final class ExchangeEditForm implements Form {
 
                         // 바로 아이템 추가
                         $entity->addItem($cost1, $cost2, $result, $texture);
-                        $player->sendMessage('§l§6 • §r§7§a상품이 추가되었습니다');
+                        $player->sendMessage('§r丌 상품이 추가되었습니다.');
                         $player->removeCurrentWindow();
                         return $transaction->discard();
                     }
@@ -115,26 +116,26 @@ final class ExchangeEditForm implements Form {
                     for ($i = 0; $i < 27; $i++) {
                         $inv2_inv->setItem($i, VanillaItems::AIR());
                     }
-                    $inv2_inv->setItem(2, LegacyStringToItemParser::getInstance()->parse('wool:5')
+                    $inv2_inv->setItem(2, VanillaBlocks::WOOL()->setColor(DyeColor::LIME)->asItem()
                         ->setCustomName('§r§a갯수 증가'));
                     $inv2_inv->setItem(11, $cost1);
-                    $inv2_inv->setItem(20, LegacyStringToItemParser::getInstance()->parse('wool:14')
+                    $inv2_inv->setItem(20, VanillaBlocks::WOOL()->setColor(DyeColor::RED)->asItem()
                         ->setCustomName('§r§c갯수 감소'));
 
-                    $inv2_inv->setItem(3, LegacyStringToItemParser::getInstance()->parse('wool:5')
+                    $inv2_inv->setItem(3, VanillaBlocks::WOOL()->setColor(DyeColor::LIME)->asItem()
                         ->setCustomName('§r§a갯수 증가'));
                     $inv2_inv->setItem(12, $cost2);
-                    $inv2_inv->setItem(21, LegacyStringToItemParser::getInstance()->parse('wool:14')
+                    $inv2_inv->setItem(21, VanillaBlocks::WOOL()->setColor(DyeColor::RED)->asItem()
                         ->setCustomName('§r§c갯수 감소'));
 
-                    $inv2_inv->setItem(6, LegacyStringToItemParser::getInstance()->parse('wool:5')
+                    $inv2_inv->setItem(6, VanillaBlocks::WOOL()->setColor(DyeColor::LIME)->asItem()
                         ->setCustomName('§r§a갯수 증가'));
                     $inv2_inv->setItem(15, $result);
-                    $inv2_inv->setItem(24, LegacyStringToItemParser::getInstance()->parse('wool:14')
+                    $inv2_inv->setItem(24, VanillaBlocks::WOOL()->setColor(DyeColor::RED)->asItem()
                         ->setCustomName('§r§c갯수 감소'));
-                    $inv2_inv->setItem(17, LegacyStringToItemParser::getInstance()->parse('wool:5')
+                    $inv2_inv->setItem(17, VanillaBlocks::WOOL()->setColor(DyeColor::LIME)->asItem()
                         ->setCustomName('§r§a상품 수정하기'));
-                    $inv2_inv->setItem(26, LegacyStringToItemParser::getInstance()->parse('minecraft:barrier')
+                    $inv2_inv->setItem(26, VanillaBlocks::BARRIER()->asItem()
                         ->setCustomName('§r§c상품 삭제하기'));
                     $inv2->setListener(function (InvMenuTransaction $transaction) use ($entity, $slot1): InvMenuTransactionResult {
                         $player = $transaction->getPlayer();
@@ -185,13 +186,13 @@ final class ExchangeEditForm implements Form {
                             $result = $inv->getItem(15);
                             $transaction->getPlayer()->removeCurrentWindow();
                             $entity->editItem($slot1, $cost1, $cost2, $result);
-                            $player->sendMessage('§l§6 • §r§7§a상품을 수정하였습니다');
+                            $player->sendMessage('§r丌 상품을 수정하였습니다.');
                             return $transaction->discard();
                         }
                         if ($slot === 26) {
                             $transaction->getPlayer()->removeCurrentWindow();
                             $entity->removeItem($slot1);
-                            $player->sendMessage('§l§6 • §r§7§a상품을 삭제하였습니다');
+                            $player->sendMessage('§r丌 상품을 삭제하였습니다.');
                             return $transaction->discard();
                         }
                         return $transaction->discard();
