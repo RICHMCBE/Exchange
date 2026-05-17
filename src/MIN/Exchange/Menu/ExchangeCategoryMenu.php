@@ -7,6 +7,7 @@ namespace MIN\Exchange\Menu;
 use kim\present\loader\invmenu\customsized\CustomSizedInvMenuHelper;
 use MIN\Exchange\Entity\ExchangeEntity;
 use MIN\Exchange\Exchange;
+use MIN\Exchange\Form\ExchangeListForm; // phpcs:ignore
 use muqsit\invmenu\transaction\InvMenuTransaction;
 use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use pocketmine\block\VanillaBlocks;
@@ -55,8 +56,10 @@ final class ExchangeCategoryMenu
 				return $tr->discard();
 			}
 
+			$player = $tr->getPlayer();
+			$player->removeCurrentWindow();
 			return $tr->discard()->then(function (Player $player) use ($entity, $slotIndex): void {
-				ExchangeItemMenu::open($player, $entity, $slotIndex);
+				$player->sendForm(new ExchangeListForm($player, $entity, $slotIndex));
 			});
 		});
 
