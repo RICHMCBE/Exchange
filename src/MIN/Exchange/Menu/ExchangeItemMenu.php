@@ -99,7 +99,7 @@ final class ExchangeItemMenu
 				$mailInfo = new MailInfo(
 					null,
 					(int) $player->getXuid(),
-					'교환상점 아이템 지급',
+					'§M§C§E교환상점 아이템 지급',
 					'인벤토리가 가득 차 교환 결과물을 메일로 발송합니다.',
 					0,
 					array_values($leftover)
